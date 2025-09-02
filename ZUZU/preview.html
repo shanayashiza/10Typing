@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10Types - Typing Game Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .typing-font { font-family: 'JetBrains Mono', monospace; }
+        .game-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .game-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .performance-metric {
+            background: linear-gradient(135deg, #f6f8ff 0%, #e6f3ff 100%);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        .virtual-key {
+            min-width: 2.5rem;
+            height: 2.5rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+        .virtual-key.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            transform: translateY(1px);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        .level-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .level-card.completed {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border-color: #16a34a;
+        }
+        .level-card.locked {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border-color: #94a3b8;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 typing-font">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
+                        10
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">10Types</h1>
+                        <p class="text-sm text-gray-600">Master Your Typing Skills</p>
+                    </div>
+                </div>
+                <nav class="flex space-x-6">
+                    <a href="#dashboard" class="text-blue-600 font-medium">Dashboard</a>
+                    <a href="#learning" class="text-gray-600 hover:text-blue-600">Learning</a>
+                    <a href="#games" class="text-gray-600 hover:text-blue-600">Games</a>
+                    <a href="#profile" class="text-gray-600 hover:text-blue-600">Profile</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="space-y-6">
+            <!-- Welcome Section -->
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg p-6 text-white">
+                <h2 class="text-3xl font-bold mb-2">Welcome back, User!</h2>
+                <p class="text-blue-100">Ready to improve your typing skills today?</p>
+            </div>
+
+            <!-- Performance Overview -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-xl font-semibold mb-4">Performance Overview</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="performance-metric">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl text-yellow-600">⚡</span>
+                            <span class="text-2xl font-bold text-gray-900">45</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Best WPM</p>
+                    </div>
+                    <div class="performance-metric">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl text-blue-600">📈</span>
+                            <span class="text-2xl font-bold text-gray-900">38</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Average WPM</p>
+                    </div>
+                    <div class="performance-metric">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl text-green-600">🎯</span>
+                            <span class="text-2xl font-bold text-gray-900">65%</span>
+                        </div>
+                        <p class="text-sm text-gray-600">Completion Rate</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-xl font-semibold mb-4">Quick Actions</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <button class="game-card text-left p-4 bg-white border rounded-lg">
+                        <div class="bg-blue-500 w-12 h-12 rounded-lg flex items-center justify-center text-white text-xl mb-4">📚</div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Continue Learning</h4>
+                        <p class="text-sm text-gray-600">Level 2 - Sublevel 3</p>
+                    </button>
+                    <button class="game-card text-left p-4 bg-white border rounded-lg">
+                        <div class="bg-purple-500 w-12 h-12 rounded-lg flex items-center justify-center text-white text-xl mb-4">🎮</div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Play Games</h4>
+                        <p class="text-sm text-gray-600">Choose from 4 typing games</p>
+                    </button>
+                    <button class="game-card text-left p-4 bg-white border rounded-lg">
+                        <div class="bg-green-500 w-12 h-12 rounded-lg flex items-center justify-center text-white text-xl mb-4">📊</div>
+                        <h4 class="font-semibold text-gray-900 mb-2">View Statistics</h4>
+                        <p class="text-sm text-gray-600">12 sessions completed</p>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Mode Section -->
+        <section id="learning" class="mt-12">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-xl font-semibold mb-6">Learning Mode - Level Selection</h3>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <!-- Level 1 - Completed -->
+                    <div class="level-card completed p-4 text-center">
+                        <div class="text-3xl mb-2">✅</div>
+                        <h4 class="font-semibold text-gray-900">Level 1</h4>
+                        <p class="text-sm text-gray-600 mb-2">Basic Fingers</p>
+                        <div class="w-full bg-green-200 rounded-full h-2">
+                            <div class="bg-green-600 h-2 rounded-full" style="width: 100%"></div>
+                        </div>
+                        <p class="text-xs text-green-600 mt-1">Completed</p>
+                    </div>
+                    
+                    <!-- Level 2 - In Progress -->
+                    <div class="level-card p-4 text-center cursor-pointer hover:shadow-lg">
+                        <div class="text-3xl mb-2">🚀</div>
+                        <h4 class="font-semibold text-gray-900">Level 2</h4>
+                        <p class="text-sm text-gray-600 mb-2">Top & Bottom</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-blue-600 h-2 rounded-full" style="width: 60%"></div>
+                        </div>
+                        <p class="text-xs text-blue-600 mt-1">60% Complete</p>
+                    </div>
+                    
+                    <!-- Level 3 - Locked -->
+                    <div class="level-card locked p-4 text-center">
+                        <div class="text-3xl mb-2">🔒</div>
+                        <h4 class="font-semibold text-gray-500">Level 3</h4>
+                        <p class="text-sm text-gray-500 mb-2">Keyboard Mastery</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-gray-400 h-2 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Locked</p>
+                    </div>
+                    
+                    <!-- Level 4 - Locked -->
+                    <div class="level-card locked p-4 text-center">
+                        <div class="text-3xl mb-2">🔒</div>
+                        <h4 class="font-semibold text-gray-500">Level 4</h4>
+                        <p class="text-sm text-gray-500 mb-2">Efficiency</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-gray-400 h-2 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Locked</p>
+                    </div>
+                    
+                    <!-- Level 5 - Locked -->
+                    <div class="level-card locked p-4 text-center">
+                        <div class="text-3xl mb-2">🔒</div>
+                        <h4 class="font-semibold text-gray-500">Level 5</h4>
+                        <p class="text-sm text-gray-500 mb-2">Speed Master</p>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-gray-400 h-2 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">Locked</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typing Interface Preview -->
+            <div class="bg-white rounded-lg shadow p-6 mt-6">
+                <h3 class="text-xl font-semibold mb-4">Typing Interface</h3>
+                
+                <!-- Performance Metrics -->
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="performance-metric text-center">
+                        <div class="text-2xl font-bold text-blue-600">42</div>
+                        <div class="text-sm text-gray-600">WPM</div>
+                    </div>
+                    <div class="performance-metric text-center">
+                        <div class="text-2xl font-bold text-green-600">95%</div>
+                        <div class="text-sm text-gray-600">Accuracy</div>
+                    </div>
+                    <div class="performance-metric text-center">
+                        <div class="text-2xl font-bold text-red-600">3</div>
+                        <div class="text-sm text-gray-600">Errors</div>
+                    </div>
+                </div>
+
+                <!-- Typing Area -->
+                <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                    <p class="text-lg leading-relaxed">
+                        <span class="bg-green-200">The quick brown fox jumps over</span>
+                        <span class="bg-yellow-200 border-l-2 border-blue-500"> </span>
+                        <span class="text-gray-400">the lazy dog and runs away</span>
+                    </p>
+                </div>
+
+                <!-- Virtual Keyboard -->
+                <div class="bg-gray-100 rounded-lg p-4">
+                    <h4 class="text-sm font-semibold text-gray-700 mb-3">Virtual Keyboard</h4>
+                    
+                    <!-- Number Row -->
+                    <div class="flex justify-center space-x-1 mb-2">
+                        <div class="virtual-key flex items-center justify-center text-sm">1</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">2</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">3</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">4</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">5</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">6</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">7</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">8</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">9</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">0</div>
+                    </div>
+                    
+                    <!-- Top Row -->
+                    <div class="flex justify-center space-x-1 mb-2">
+                        <div class="virtual-key flex items-center justify-center text-sm">Q</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">W</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">E</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">R</div>
+                        <div class="virtual-key active flex items-center justify-center text-sm">T</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">Y</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">U</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">I</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">O</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">P</div>
+                    </div>
+                    
+                    <!-- Home Row -->
+                    <div class="flex justify-center space-x-1 mb-2">
+                        <div class="virtual-key flex items-center justify-center text-sm">A</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">S</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">D</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">F</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">G</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">H</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">J</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">K</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">L</div>
+                    </div>
+                    
+                    <!-- Bottom Row -->
+                    <div class="flex justify-center space-x-1">
+                        <div class="virtual-key flex items-center justify-center text-sm">Z</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">X</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">C</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">V</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">B</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">N</div>
+                        <div class="virtual-key flex items-center justify-center text-sm">M</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Games Section -->
+        <section id="games" class="mt-12">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-xl font-semibold mb-6">Game Mode</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Catch Letter Game -->
+                    <button class="game-card p-4 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg">
+                        <div class="text-4xl mb-3">🎯</div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Catch the Letter!</h4>
+                        <p class="text-sm text-gray-600 mb-3">Catch falling letters by typing them quickly</p>
+                        <div class="text-xs text-blue-600">Best Score: 1,250</div>
+                    </button>
+                    
+                    <!-- Word Path Game -->
+                    <button class="game-card p-4 bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-lg">
+                        <div class="text-4xl mb-3">🗺️</div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Word Path</h4>
+                        <p class="text-sm text-gray-600 mb-3">Navigate your character through obstacles</p>
+                        <div class="text-xs text-green-600">Best Score: 890</div>
+                    </button>
+                    
+                    <!-- Sentence Launcher Game -->
+                    <button class="game-card p-4 bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-lg">
+                        <div class="text-4xl mb-3">🚀</div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sentence Launcher</h4>
+                        <p class="text-sm text-gray-600 mb-3">Launch projectiles by typing sentences</p>
+                        <div class="text-xs text-purple-600">Best Score: 2,100</div>
+                    </button>
+                    
+                    <!-- Speed Duel Game -->
+                    <button class="game-card p-4 bg-gradient-to-br from-red-50 to-red-100 border border-red-200 rounded-lg">
+                        <div class="text-4xl mb-3">⚡</div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Speed Duel!</h4>
+                        <p class="text-sm text-gray-600 mb-3">Race against AI in typing speed</p>
+                        <div class="text-xs text-red-600">Win Rate: 68%</div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Overview -->
+        <section id="features" class="mt-12">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-xl font-semibold mb-6">App Features</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="text-4xl mb-3">🎓</div>
+                        <h4 class="font-semibold mb-2">Progressive Learning</h4>
+                        <p class="text-sm text-gray-600">5 levels with 20 sublevels each (100 total lessons)</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-3">🌍</div>
+                        <h4 class="font-semibold mb-2">Multi-Language</h4>
+                        <p class="text-sm text-gray-600">Support for Indonesian and English</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-3">📊</div>
+                        <h4 class="font-semibold mb-2">Performance Tracking</h4>
+                        <p class="text-sm text-gray-600">WPM, accuracy, and progress analytics</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-3">🎮</div>
+                        <h4 class="font-semibold mb-2">Gamification</h4>
+                        <p class="text-sm text-gray-600">4 interactive typing games</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-3">🎵</div>
+                        <h4 class="font-semibold mb-2">Audio Enhancement</h4>
+                        <p class="text-sm text-gray-600">Background music and sound effects</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl mb-3">📱</div>
+                        <h4 class="font-semibold mb-2">Responsive Design</h4>
+                        <p class="text-sm text-gray-600">Works on desktop, tablet, and mobile</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="max-w-6xl mx-auto px-4 py-8">
+            <div class="text-center">
+                <div class="text-2xl font-bold mb-2">10Types</div>
+                <p class="text-gray-400 mb-4">Master Your Typing Skills</p>
+                <div class="flex justify-center space-x-6">
+                    <span class="text-sm">🔧 Built with React + TypeScript</span>
+                    <span class="text-sm">⚡ Powered by Vite</span>
+                    <span class="text-sm">🎨 Styled with Tailwind CSS</span>
+                    <span class="text-sm">🗄️ Backend by Supabase</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple interactivity for preview
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Simulate typing effect
+            const typingText = document.querySelector('#learning .bg-gray-50 p');
+            if (typingText) {
+                let index = 0;
+                const text = "The quick brown fox jumps over the lazy dog and runs away";
+                const speed = 100;
+
+                function typeEffect() {
+                    const typed = text.substring(0, index);
+                    const cursor = index < text.length ? '|' : '';
+                    const remaining = text.substring(index);
+                    
+                    typingText.innerHTML = `
+                        <span class="bg-green-200">${typed}</span>
+                        <span class="bg-yellow-200 border-l-2 border-blue-500">${cursor}</span>
+                        <span class="text-gray-400">${remaining}</span>
+                    `;
+                    
+                    if (index < text.length) {
+                        index++;
+                        setTimeout(typeEffect, speed);
+                    }
+                }
+
+                // Start typing effect after 2 seconds
+                setTimeout(typeEffect, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
