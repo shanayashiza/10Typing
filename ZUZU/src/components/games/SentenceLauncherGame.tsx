@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAudio } from '../../providers/AudioProvider'
+import  useAudio  from '../../providers/AudioProvider';
 
 interface SentenceLauncherGameProps {
   onGameComplete?: (results: any) => void
@@ -203,5 +203,6 @@ const SentenceLauncherGame: React.FC<SentenceLauncherGameProps> = ({
     </div>
   )
 }
+
 
 export default SentenceLauncherGame
