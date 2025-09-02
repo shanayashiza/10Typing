@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import  AudioProvider  from '../../providers/AudioProvider';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useAudio } from '../../providers/AudioProvider';
 
 interface SentenceLauncherGameProps {
-  onGameComplete?: (results: any) => void
-  difficulty?: 'easy' | 'medium' | 'hard'
+  onGameComplete?: (results: any) => void;
+  difficulty?: 'easy' | 'medium' | 'hard';
 }
 
 const SentenceLauncherGame: React.FC<SentenceLauncherGameProps> = ({
@@ -206,4 +206,5 @@ const SentenceLauncherGame: React.FC<SentenceLauncherGameProps> = ({
 
 
 export default SentenceLauncherGame
+
 
