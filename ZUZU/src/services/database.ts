@@ -1,7 +1,6 @@
 import { supabase } from '../lib/supabase'
 import type { 
   User, 
-  KemajuanBelajar
 } from '../lib/supabase'
 
 // User Profile Services
@@ -302,4 +301,5 @@ export const dashboardService = {
       recentSessions
     }
   },
+
 }
